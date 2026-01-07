@@ -1,33 +1,63 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Ionicons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
+import colors from "../styles/colors";
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarActiveTintColor: colors.white,
+        tabBarInactiveTintColor: colors.gray,
+
+        headerStyle: {
+            backgroundColor: colors.primary,
+        },
+        headerShadowVisible: false,
+        headerTintColor: colors.white,
+
+        tabBarStyle: {
+            backgroundColor: colors.offWhite,
+        },
+    }}
+
+    >
       <Tabs.Screen
-        name="index"
+        name="fast"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          headerTitle: "Fast-Food",
+          tabBarIcon: ({ focused, color }) => (
+            <Ionicons
+              name={focused ? "home-sharp" : "home-outline"}
+              size={24}
+              color={color}
+            />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="sitdown"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          headerTitle: "Sit-Down Restaurants",
+          tabBarIcon: ({ focused, color }) => (
+            <Ionicons
+              name={focused ? "people" : "people-outline"}
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="hangout"
+        options={{
+          headerTitle: "Hangout Spots",
+          tabBarIcon: ({ focused, color }) => (
+            <Ionicons
+              name={focused ? "school" : "school-outline"}
+              size={24}
+              color={color}
+            />
+          ),
         }}
       />
     </Tabs>
