@@ -1,19 +1,20 @@
 import { useRouter } from "expo-router";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import colors from "./styles/colors";
 
 export default function IndexScreen() {
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Welcome to the App</Text>
       <Button
         title="Enter App"
         color={colors.primary}
         onPress={() => router.push("/(tabs)/fast")}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
