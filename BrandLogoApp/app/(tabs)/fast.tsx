@@ -1,11 +1,12 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import defaultStyles from "../styles/defaultStyles";
 
 export default function FamilyScreen() {
   return (
-    <View style={defaultStyles.pageContainer}>
+    <SafeAreaView style={defaultStyles.pageContainer}>
       <Text style={defaultStyles.bodyText}>My Family</Text>
-    </View>
+    </SafeAreaView>
   );
 }
