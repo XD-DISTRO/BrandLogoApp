@@ -6,6 +6,8 @@ const colors = {
   primary: "#C7926E",      // main coffee-brown background
   primaryDark: "#A87452",  // darker shade for buttons/headers
   primaryLight: "#E1B89C", // lighter accent
+  umberrr: "#873E23",    // complementary dark brown
+     // deep umber accent
 
   // Neutrals
   white: "#FFFFFF",

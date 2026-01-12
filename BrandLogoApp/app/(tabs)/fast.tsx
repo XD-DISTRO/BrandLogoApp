@@ -7,7 +7,8 @@ import defaultStyles from "../styles/defaultStyles";
 export default function FamilyScreen() {
   return (
     <SafeAreaView style={defaultStyles.pageContainer}>
-      <Text style={defaultStyles.bodyText}>My Family</Text>
+      <Text style={defaultStyles.bodyText}>This tab is to figure out what to do when you want to</Text>
+      <Text style={defaultStyles.bodyText}>sit down and have food with friends</Text>
       <Image
                 source={require("../../assets/images/iconlogotrans.png")}
                 style={styles.image}

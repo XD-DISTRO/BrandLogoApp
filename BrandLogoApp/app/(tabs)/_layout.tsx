@@ -11,7 +11,7 @@ export default function TabsLayout() {
       <Tabs
         screenOptions={{
           headerShown: false,
-        tabBarActiveTintColor: colors.white,
+        tabBarActiveTintColor: colors.black,
         tabBarInactiveTintColor: colors.gray,
 
         headerStyle: {
@@ -27,7 +27,7 @@ export default function TabsLayout() {
 
     >
       <Tabs.Screen
-        name="fast"
+        name="eatout"
         options={{
           headerTitle: "Fast-Food",
           tabBarIcon: ({ focused, color }) => (

@@ -3,17 +3,16 @@ import colors from "../styles/colors";
 
 export default function AppHeader() {
   return <View style={styles.container}>
-        <Text style={styles.header}>W Eats</Text>
-        <Image
-          source={require("../../assets/images/android-icon-background.png")}
-          style={styles.image}
-        />
+        <Text style={styles.header}>Palatine Hangout Finder</Text>
+        <Image source={require("../../assets/images/iconlogotrans.png")} style={styles.image} />
   </View>;
 }
 const styles = StyleSheet.create({
   container: {
-    height: 50,
-    backgroundColor: colors.beige,
+    height: 67,
+    backgroundColor: colors.umberrr,
+    justifyContent: "center",
+    alignItems: "center",
   },
   header:{
     justifyContent: "center",
@@ -22,8 +21,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   image:{
-    width: 100,
-    height: 100,
+    width: 60,
+    height: 60,
     position: "absolute",
     right: 10,
     top: 5,
