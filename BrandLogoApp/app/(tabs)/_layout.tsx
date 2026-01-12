@@ -27,7 +27,7 @@ export default function TabsLayout() {
 
     >
       <Tabs.Screen
-        name="eatout"
+        name="fast"
         options={{
           headerTitle: "Fast-Food",
           tabBarIcon: ({ focused, color }) => (

@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { Button, StyleSheet, Text } from "react-native";
+import { Button, Image, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import colors from "./styles/colors";
 
@@ -8,6 +8,7 @@ export default function IndexScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Image src="../../assets/images/iconlogotrans.png" style={{ width: 100, height: 100, marginBottom: 20 }} />
       <Text style={styles.text}>Welcome to the App</Text>
       <Button
         title="Enter App"
@@ -21,7 +22,7 @@ export default function IndexScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primaryDark,
+    backgroundColor: colors.umberrr,
     justifyContent: "center",
     alignItems: "center",
   },
