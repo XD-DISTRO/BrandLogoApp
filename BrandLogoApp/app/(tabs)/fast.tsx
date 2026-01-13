@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   image:{
-    width: 10,
+    width: 100,
     height: 100,
     position: "absolute",
     right: 10,
