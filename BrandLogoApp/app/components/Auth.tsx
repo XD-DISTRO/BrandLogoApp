@@ -2,13 +2,16 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { Button, Image, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import TextField from "./components/TextField";
-import colors from "./styles/colors";
+import colors from "../styles/colors";
+import TextField from "./TextField";
 
 export default function IndexScreen() {
   const router = useRouter();
   const [name, setName] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const hasMinLength = (text: string, min: number): boolean => {
+    return text.length >= min;
+};
 
   return (
     <SafeAreaView style={styles.container}>
