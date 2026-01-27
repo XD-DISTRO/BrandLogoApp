@@ -15,7 +15,7 @@ export default function IndexScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={require("../assets/images/iconlogotrans.png")} style={{ width: 120, height: 100, marginBottom: 20 }} />
+      <Image source={require("../../assets/images/iconlogotrans.png")} style={{ width: 120, height: 100, marginBottom: 20 }} />
       <Text style={styles.text}>Welcome to the App</Text>
       <Text style={styles.subtext}>enter your name and password</Text>
       <TextField

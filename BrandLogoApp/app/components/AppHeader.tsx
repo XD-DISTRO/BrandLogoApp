@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text } from "react-native";
+import { Button, Image, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import colors from "../styles/colors";
 
@@ -10,6 +10,7 @@ export default function AppHeader() {
         source={require("../../assets/images/iconlogotrans.png")}
         style={styles.image}
       />
+      <Button title="Logout" onPress={() => console.log("You have logged out")} />
     </SafeAreaView>
   );
 }
