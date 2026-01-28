@@ -1,41 +1,33 @@
-import { useRouter } from "expo-router";
-import React from "react";
-import { Button, Image, StyleSheet, Text } from "react-native";
+import { useRouter, } from "expo-router";
+import React, { useEffect } from "react";
+import { ActivityIndicator, Image, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import TextField from "./components/TextField";
+import Auth from "./components/Auth";
+import { useAuth } from "./components/AuthProvider";
 import colors from "./styles/colors";
 
 export default function IndexScreen() {
   const router = useRouter();
-  const [name, setName] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const { session, isLoading } = useAuth();
+  useEffect(() => {
+    if (session?.user) {
+      // Replace prevents going "back" to login screen
+      router.replace("../(tabs)");
+    }
+  }, [router, session]);
 
+  if (isLoading) {
+    return <ActivityIndicator style={{ marginTop: 40 }} />;
+  }
+
+  if (session?.user) {
+    // Redirecting — nothing to render
+    return null;
+  }
   return (
     <SafeAreaView style={styles.container}>
       <Image source={require("../assets/images/iconlogotrans.png")} style={{ width: 120, height: 100, marginBottom: 20 }} />
-      <Text style={styles.text}>Welcome to the App</Text>
-      <Text style={styles.subtext}>enter your name and password</Text>
-      <TextField
-        value={name}
-        setValue={setName}
-        placeholder="Name"
-        secure={false}
-      />
-      <TextField
-        value={password}
-        setValue={setPassword}
-        placeholder="Password"
-        secure={true}
-      />
-      <Button
-        title="Enter App"
-        color={colors.primary}
-        onPress={() => router.push("/(tabs)/fast")}
-      />
-      <Button
-        title="Sign Up"
-        color={colors.primary}
-      />
+       <Auth/>
     </SafeAreaView>
   );
 }

@@ -1,17 +1,69 @@
-import { useRouter } from "expo-router";
-import React from "react";
-import { Button, Image, StyleSheet, Text } from "react-native";
+import { supabase } from "@/utils/supabase";
+import React, { useEffect, useState } from "react";
+import { Alert, AppState, AppStateStatus, Button, Image, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import colors from "../styles/colors";
 import TextField from "./TextField";
 
-export default function IndexScreen() {
-  const router = useRouter();
-  const [name, setName] = React.useState("");
-  const [password, setPassword] = React.useState("");
+export default function Auth() {
+  const [email, setEmail] = useState("@gmail.com");
+  const [password, setPassword] = useState("123456");
+  
   const hasMinLength = (text: string, min: number): boolean => {
     return text.length >= min;
-};
+  };
+  
+   useEffect(() => {
+    const handleAppStateChange = (nextState: AppStateStatus) => {
+      if (nextState === "active") {
+        supabase.auth.startAutoRefresh();
+      } else {
+        try {
+          supabase.auth.stopAutoRefresh();
+        } catch {}
+      }
+    };
+
+    const subscription = AppState.addEventListener(
+      "change",
+      handleAppStateChange,
+    );
+
+    if (AppState.currentState === "active") {
+      supabase.auth.startAutoRefresh();
+    }
+
+    return () => {
+      if (typeof subscription?.remove === "function") {
+        subscription.remove();
+      }
+      try {
+        supabase.auth.stopAutoRefresh();
+      } catch {}
+    };
+  }, []);
+
+  async function signInWithEmail() {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      Alert.alert(error.message);
+    }
+  }
+
+  async function signUpWithEmail() {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      Alert.alert(error.message);
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -19,8 +71,8 @@ export default function IndexScreen() {
       <Text style={styles.text}>Welcome to the App</Text>
       <Text style={styles.subtext}>enter your name and password</Text>
       <TextField
-        value={name}
-        setValue={setName}
+        value={email}
+        setValue={setEmail}
         placeholder="Name"
         secure={false}
       />
@@ -30,15 +82,8 @@ export default function IndexScreen() {
         placeholder="Password"
         secure={true}
       />
-      <Button
-        title="Enter App"
-        color={colors.primary}
-        onPress={() => router.push("/(tabs)/fast")}
-      />
-      <Button
-        title="Sign Up"
-        color={colors.primary}
-      />
+      <Button title="Sign in" onPress={signInWithEmail} />
+      <Button title="Sign up" onPress={signUpWithEmail} />
     </SafeAreaView>
   );
 }
