@@ -12,6 +12,21 @@ const defaultStyles = StyleSheet.create({
     fontSize: 20,
     color: colors.textSecondary,
   },
+  headerText: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: colors.textPrimary,
+    marginBottom: 20,
+  },
+  subheaderText: {
+    fontSize: 22,
+    color: colors.textPrimary,
+    marginBottom: 15,
+  },
+  button: {
+    backgroundColor: colors.primary,
+    paddingVertical: 12,
+  },
 });
 
 export default defaultStyles;
