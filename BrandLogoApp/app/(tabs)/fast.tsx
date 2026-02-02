@@ -1,14 +1,24 @@
+//used TextInput component instead of TextField component
+// link : https://reactnative.dev/docs/textinput
+
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import TextField from "../components/TextField";
 import colors from "../styles/colors";
 import defaultStyles from "../styles/defaultStyles";
 
 export default function FamilyScreen() {
   return (
     <SafeAreaView style={defaultStyles.pageContainer}>
-      <Text style={defaultStyles.bodyText}>This tab is to figure out what to do when you want to</Text>
-      <Text style={defaultStyles.bodyText}>sit down and have food with friends</Text>
+      <TextField
+        value="first name"
+        setValue={() => {}}
+      />
+      <TextField
+        value="first name"
+        setValue={() => {}}
+      />
     </SafeAreaView>
   );
 }

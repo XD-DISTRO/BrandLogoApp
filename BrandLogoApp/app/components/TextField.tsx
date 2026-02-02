@@ -10,7 +10,7 @@ type TextFieldProps = {
   secure?: boolean;
 };
 
-export default function TextField({ value, setValue, placeholder, secure }: TextFieldProps) {
+export default function TextField({ value, setValue, placeholder, secure, onChangeText }: TextFieldProps) {
   return (
     <View style={styles.textInputContainer}>
       <TextInput
@@ -18,7 +18,7 @@ export default function TextField({ value, setValue, placeholder, secure }: Text
         placeholder={placeholder}
         placeholderTextColor={colors.primary}
         value={value}
-        onChangeText={setValue}
+        onChangeText={(text) => setValue(text)}
         secureTextEntry={secure}
       />
     </View>
