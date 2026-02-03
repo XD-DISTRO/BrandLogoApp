@@ -1,28 +1,22 @@
-import React from 'react';
-
-type ButtonProps = {
-    children: React.ReactNode;
-    onClick?: () => void;
-    type?: 'button' | 'submit' | 'reset';
-    disabled?: boolean;
-    className?: string;
+import React from "react";
+import { Text, TouchableHighlight } from "react-native";
+import colors from "../styles/colors";
+import defaultStyles from "../styles/defaultStyles";
+type propsType = {
+  title: string;
+  color?: string;
+  textColor?: string;
+  onPress:()=>void;
 };
-
-const Button: React.FC<ButtonProps> = ({
-    children,
-    onClick,
-    type = 'button',
-    disabled = false,
-    className = '',
-}) => (
-    <button
-        type={type}
-        onClick={onClick}
-        disabled={disabled}
-        className={`px-4 py-2 bg-blue-600 text-white rounded ${className}`}
+const Button: React.FC<propsType> = ({ title, color = colors.primary, textColor = colors.primaryDark, onPress }) => {
+  return (
+    <TouchableHighlight
+      onPress={onPress}
+      style={[defaultStyles.button, { backgroundColor: color }]}
     >
-        {children}
-    </button>
-);
+      <Text style={[defaultStyles.button, { color: textColor }]}>{title}</Text>
+    </TouchableHighlight>
+  );
+};
 
 export default Button;

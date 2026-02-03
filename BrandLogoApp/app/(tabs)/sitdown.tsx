@@ -22,7 +22,8 @@ export default function EditProfileScreen() {
   // Local form state
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [classPeriod, setClassPeriod] = useState("");
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState("");
   const [loading, setLoading] = useState(false); // screen action loading
   const [initialLoading, setInitialLoading] = useState(true); // loading while fetching profile
 
@@ -53,7 +54,7 @@ export default function EditProfileScreen() {
         // Read the profile row. We expect a single row matched by id.
         const { data, error } = await supabase
           .from("profiles")
-          .select("first_name, last_name, class_period")
+          .select("first_name, last_name, location, date")
           .eq("id", userId)
           .single();
 
@@ -67,7 +68,8 @@ export default function EditProfileScreen() {
         if (mounted && data) {
           setFirstName(data.first_name ?? "");
           setLastName(data.last_name ?? "");
-          setClassPeriod(data.class_period ?? "");
+          setLocation(data.location ?? "");
+          setDate(data.date ?? "");
         }
       } catch (err) {
         console.warn("loadProfile exception:", err);
@@ -94,9 +96,13 @@ export default function EditProfileScreen() {
       return false;
     }
     // If you want to restrict period values, update logic here:
-    const validPeriods = ["1", "4", "6"];
-    if (!validPeriods.includes(classPeriod.trim())) {
-      Alert.alert("Class period must be 1, 4, or 6.");
+    if (!location.trim()) {
+      Alert.alert("Please enter the correct location of the hangout spot.");
+      return false;
+    }
+
+    if (!date.trim()) {
+      Alert.alert("Please enter the correct location of the hangout spot.");
       return false;
     }
     return true;
@@ -118,7 +124,8 @@ export default function EditProfileScreen() {
         id: userId, // must match auth.uid() in your RLS
         first_name: firstName?.trim() || null,
         last_name: lastName?.trim() || null,
-        class_period: classPeriod?.trim() || null,
+        location: location?.trim() || null,
+        date: date?.trim() || null,
         updated_at: new Date().toISOString(),
       };
 
@@ -166,21 +173,24 @@ export default function EditProfileScreen() {
         <TextField
           placeholder="First name"
           value={firstName}
-          onChangeText={setFirstName}
+          setValue={setFirstName}
         />
         <TextField
           placeholder="Last name"
           value={lastName}
-          onChangeText={setLastName}
+          setValue={setLastName}
         />
         <TextField
-          placeholder="Period 1, 4, or 6"
-          value={classPeriod}
-          onChangeText={setClassPeriod}
-          keyboardType="numeric"
+          placeholder="Give a location"
+          value={location}
+          setValue={setLocation}
+        />
+        <TextField
+          placeholder="Date of Hangout"
+          value={date}
+          setValue={setDate}
         />
       </View>
-
       <Button
         title={loading ? "Saving..." : "Save Profile"}
         onPress={saveProfile}

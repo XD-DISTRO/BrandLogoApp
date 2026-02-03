@@ -16,7 +16,7 @@ export default function FamilyScreen() {
         setValue={() => {}}
       />
       <TextField
-        value="first name"
+        value="last name"
         setValue={() => {}}
       />
     </SafeAreaView>

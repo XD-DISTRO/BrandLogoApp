@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { KeyboardTypeOptions, StyleSheet, TextInput, View } from 'react-native';
 import colors from '../styles/colors';
 
 //used chatgpt to create a reusable text field component
@@ -8,9 +8,10 @@ type TextFieldProps = {
   setValue: (text: string) => void;
   placeholder?: string;
   secure?: boolean;
+  keyboardType?: KeyboardTypeOptions;
 };
 
-export default function TextField({ value, setValue, placeholder, secure, onChangeText }: TextFieldProps) {
+export default function TextField({ value, setValue, placeholder, secure, keyboardType }: TextFieldProps) {
   return (
     <View style={styles.textInputContainer}>
       <TextInput
@@ -20,6 +21,7 @@ export default function TextField({ value, setValue, placeholder, secure, onChan
         value={value}
         onChangeText={(text) => setValue(text)}
         secureTextEntry={secure}
+        keyboardType={keyboardType}
       />
     </View>
   );
