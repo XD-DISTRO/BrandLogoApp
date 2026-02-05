@@ -49,8 +49,8 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="fast"
         options={{
-          headerTitle: "Fast-Food",
-          tabBarLabel: "Add Spots",
+          headerTitle: "Where Are Your Friends?",
+          tabBarLabel: "Look-Up",
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
               name={focused ? "home-sharp" : "home-outline"}
@@ -63,8 +63,8 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="sitdown"
         options={{
-          headerTitle: "Sit-Down Restaurants",
-          tabBarLabel: "Person Logs",
+          headerTitle: "Where Are You?",
+          tabBarLabel: "Add Log",
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
               name={focused ? "people" : "people-outline"}
@@ -77,8 +77,8 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          headerTitle: "Hangout Spots",
-          tabBarLabel: "Spot Logs",
+          headerTitle: "Notifications",
+          tabBarLabel: "Notifs",
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
               name={focused ? "school" : "school-outline"}
