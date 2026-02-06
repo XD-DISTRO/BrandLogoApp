@@ -1,4 +1,3 @@
-
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import { View } from "react-native";
@@ -9,7 +8,6 @@ import colors from "../styles/colors";
 
 export default function TabsLayout() {
   const { session } = useAuth();
-
 
   // If session becomes null while inside tabs, render Auth in-place (no navigation)
   // If session is null while inside the tabs navigator, render the Auth
@@ -24,71 +22,69 @@ export default function TabsLayout() {
     );
   }
 
-
   return (
     <View style={{ flex: 1 }}>
       <AppHeader />
       <Tabs
         screenOptions={{
           headerShown: false,
-        tabBarActiveTintColor: colors.umberrr,
-        tabBarInactiveTintColor: colors.gray,
+          tabBarActiveTintColor: colors.umberrr,
+          tabBarInactiveTintColor: colors.gray,
 
-        headerStyle: {
+          headerStyle: {
             backgroundColor: colors.primary,
-        },
-        headerShadowVisible: false,
-        headerTintColor: colors.white,
+          },
+          headerShadowVisible: false,
+          headerTintColor: colors.white,
 
-        tabBarStyle: {
+          tabBarStyle: {
             backgroundColor: colors.offWhite,
-        },
-    }}
-
-    >
-      <Tabs.Screen
-        name="fast"
-        options={{
-          headerTitle: "Where Are Your Friends?",
-          tabBarLabel: "Look-Up",
-          tabBarIcon: ({ focused, color }) => (
-            <Ionicons
-              name={focused ? "home-sharp" : "home-outline"}
-              size={24}
-              color={color}
-            />
-          ),
+          },
         }}
-      />
-      <Tabs.Screen
-        name="sitdown"
-        options={{
-          headerTitle: "Where Are You?",
-          tabBarLabel: "Add Log",
-          tabBarIcon: ({ focused, color }) => (
-            <Ionicons
-              name={focused ? "people" : "people-outline"}
-              size={24}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="index"
-        options={{
-          headerTitle: "Notifications",
-          tabBarLabel: "Notifs",
-          tabBarIcon: ({ focused, color }) => (
-            <Ionicons
-              name={focused ? "school" : "school-outline"}
-              size={24}
-              color={color}
-            />
-          ),
-        }}
-      /> 
-    </Tabs>
+      >
+        <Tabs.Screen
+          name="fast"
+          options={{
+            headerTitle: "Where Are Your Friends?",
+            tabBarLabel: "Look-Up Friends",
+            tabBarIcon: ({ focused, color }) => (
+              <Ionicons
+                name={focused ? "home-sharp" : "home-outline"}
+                size={24}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="sitdown"
+          options={{
+            headerTitle: "Where Are You?",
+            tabBarLabel: "Add Your Loc",
+            tabBarIcon: ({ focused, color }) => (
+              <Ionicons
+                name={focused ? "people" : "people-outline"}
+                size={24}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="index"
+          options={{
+            headerTitle: "Notifications",
+            tabBarLabel: "DnD",
+            tabBarIcon: ({ focused, color }) => (
+              <Ionicons
+                name={focused ? "school" : "school-outline"}
+                size={24}
+                color={color}
+              />
+            ),
+          }}
+        />
+      </Tabs>
     </View>
   );
 }

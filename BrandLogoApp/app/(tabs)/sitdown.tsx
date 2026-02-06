@@ -24,7 +24,6 @@ export default function EditProfileScreen() {
   const [lastName, setLastName] = useState("");
   const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false); // screen action loading
   const [initialLoading, setInitialLoading] = useState(true); // loading while fetching profile
 
@@ -55,7 +54,7 @@ export default function EditProfileScreen() {
         // Read the profile row. We expect a single row matched by id.
         const { data, error } = await supabase
           .from("profiles")
-          .select("first_name, last_name, location, date, password")
+          .select("first_name, last_name, location, date")
           .eq("id", userId)
           .single();
 
@@ -71,7 +70,6 @@ export default function EditProfileScreen() {
           setLastName(data.last_name ?? "");
           setLocation(data.location ?? "");
           setDate(data.date ?? "");
-          setPassword(data.password ?? "");
         }
       } catch (err) {
         console.warn("loadProfile exception:", err);
@@ -106,11 +104,7 @@ export default function EditProfileScreen() {
       Alert.alert("Please enter the correct location of the hangout spot.");
       return false;
     }
-    if (!password.trim()) {
-      Alert.alert("Please enter a password.");
-      return false;
-    }
-    
+
     return true;
   }
 
@@ -132,7 +126,6 @@ export default function EditProfileScreen() {
         last_name: lastName?.trim() || null,
         location: location?.trim() || null,
         date: date?.trim() || null,
-        password: password?.trim() || null,
         updated_at: new Date().toISOString(),
       };
 
@@ -197,11 +190,11 @@ export default function EditProfileScreen() {
           value={date}
           setValue={setDate}
         />
-        <TextField
+        {/* <TextField
           placeholder="Personal Password"
           value={password}
           setValue={setPassword}
-        />
+        /> */}
       </View>
       <Button
         title={loading ? "Saving..." : "Save Profile"}

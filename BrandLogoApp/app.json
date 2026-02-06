@@ -4,7 +4,7 @@
     "slug": "BrandLogoApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/iconlogotrans.png",
     "scheme": "brandlogoapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

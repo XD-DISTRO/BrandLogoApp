@@ -2,11 +2,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
 
-import RosterRow, { RosterProfile } from "@/components/RosterRow";
-import colors from "@/styles/colors";
-import defaultStyles from "@/styles/defaultStyles";
 import { supabase } from "@/utils/supabase";
 import { useRouter } from "expo-router";
+import RosterRow, { RosterProfile } from "../components/RosterRow";
+import colors from "../styles/colors";
+import defaultStyles from "../styles/defaultStyles";
 
 /*
   Roster Screen
@@ -31,8 +31,7 @@ export default function RosterScreen() {
       // NOTE: avoid the single generic on .from() to prevent TypeScript overload errors.
       const { data, error } = await supabase
         .from("profiles")
-        .select("id, first_name, last_name, class_period")
-        .order("class_period", { ascending: true })
+        .select("id, first_name, last_name, location, date, show_loc")
         .order("last_name", { ascending: true })
         .order("first_name", { ascending: true });
 
@@ -124,7 +123,7 @@ export default function RosterScreen() {
 
   return (
     <View style={defaultStyles.pageContainer}>
-      <Text style={styles.title}>Roster</Text>
+      <Text style={styles.title}>Where Are Your Friends Right Now?</Text>
 
       <FlatList
         data={profiles}
@@ -143,6 +142,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "600",
+    marginTop: 30,
     marginBottom: 12,
   },
   center: {
@@ -167,5 +167,34 @@ const styles = StyleSheet.create({
   },
   retryText: {
     color: "white",
+  },
+  //generated these custom styles using chatgpt
+  card: {
+    backgroundColor: "white",
+    padding: 16,
+    marginBottom: 12,
+    borderRadius: 12,
+
+    // iOS shadow
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+
+    // Android shadow
+    elevation: 3,
+  },
+  name: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  location: {
+    marginTop: 6,
+    color: "#555",
+  },
+  date: {
+    marginTop: 4,
+    fontSize: 12,
+    color: "#888",
   },
 });

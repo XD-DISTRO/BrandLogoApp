@@ -1,84 +1,103 @@
+//copied sitdown.tsx and js changed it to show the loc
 import { supabase } from "@/utils/supabase";
-import { useFocusEffect } from "expo-router";
-import React, { useCallback, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Alert, Text, View } from "react-native";
+import { useAuth } from "../components/AuthProvider";
+import Button from "../components/Button";
+import colors from "../styles/colors";
 import defaultStyles from "../styles/defaultStyles";
 
-/*
-  Home Screen
-  - Shows how many users are in each class period
-  - ALWAYS refreshes when the tab becomes active
-*/
-
-type PeriodCounts = Record<string, number>;
-
-export default function HomeScreen() {
-  const [counts, setCounts] = useState<PeriodCounts>({});
+export default function ToggleShowLocScreen() {
+  const { session, isLoading: authLoading } = useAuth();
+  const [showLoc, setShowLoc] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
-  const fetchCounts = useCallback(async () => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("class_period");
-
-      if (error) {
-        console.error("Error fetching counts:", error);
+  useEffect(() => {
+    let mounted = true;
+    async function load() {
+      if (!session?.user) {
+        if (mounted) {
+          setShowLoc(null);
+          setLoading(false);
+        }
         return;
       }
+      setLoading(true);
+      try {
+        const userId = session.user.id;
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("show_loc")
+          .eq("id", userId)
+          .maybeSingle();
 
-      const newCounts: PeriodCounts = {};
-
-      for (const row of data ?? []) {
-        if (!row.class_period) continue;
-        newCounts[row.class_period] = (newCounts[row.class_period] ?? 0) + 1;
+        if (error) {
+          console.warn("load show_loc error", error);
+          Alert.alert("Error loading setting", error.message || String(error));
+        } else if (mounted) {
+          setShowLoc(Boolean(data?.show_loc));
+        }
+      } catch (err) {
+        console.warn(err);
+        Alert.alert("Error loading setting", String(err));
+      } finally {
+        if (mounted) setLoading(false);
       }
-
-      setCounts(newCounts);
-    } catch (err) {
-      console.error("fetchCounts exception:", err);
-    } finally {
-      setLoading(false);
     }
-  }, []);
+    load();
+    return () => {
+      mounted = false;
+    };
+  }, [session]);
 
-  // 🔑 THIS is the important part
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchCounts();
-    }, [fetchCounts]),
-  );
+  async function toggle() {
+    if (!session?.user) {
+      Alert.alert("Not signed in");
+      return;
+    }
+    const userId = session.user.id;
+    const newVal = !Boolean(showLoc);
+    setSaving(true);
+    try {
+      const payload = { id: userId, show_loc: newVal };
+      const { data, error } = await supabase
+        .from("profiles")
+        .upsert(payload)
+        .select()
+        .maybeSingle();
+
+      if (error) {
+        console.warn("toggle error", error);
+        Alert.alert("Update failed", error.message || String(error));
+      } else {
+        setShowLoc(Boolean(data?.show_loc));
+      }
+    } catch (err) {
+      console.warn(err);
+      Alert.alert("Update failed", String(err));
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  if (authLoading || loading) {
+    return (
+      <View style={defaultStyles.pageContainer}>
+        <ActivityIndicator size="large" color={colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <View style={defaultStyles.pageContainer}>
-      <Text style={defaultStyles.bodyText}>Home page</Text>
-
-      {loading ? (
-        <ActivityIndicator />
-      ) : (
-        <View style={styles.countContainer}>
-          <Text style={styles.countText}>
-            Period 1: {counts["1"] ?? 0} students
-          </Text>
-          <Text style={styles.countText}>
-            Period 4: {counts["4"] ?? 0} students
-          </Text>
-          <Text style={styles.countText}>
-            Period 6: {counts["6"] ?? 0} students
-          </Text>
-        </View>
-      )}
+      <Text style={{ fontSize: 18, marginBottom: 12 }}>
+        Show Location: {showLoc ? "ON" : "OFF"}
+      </Text>
+      <Button
+        title={saving ? "Updating..." : showLoc ? "Turn OFF" : "Turn ON"}
+        onPress={toggle}
+      />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  countContainer: {
-    marginTop: 20,
-  },
-  countText: {
-    fontSize: 16,
-    marginBottom: 8,
-  },
-});
